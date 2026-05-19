@@ -1,57 +1,46 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
-import type { ImageMetadata } from 'astro';
-import FallbackImage from '../assets/blog-placeholder-1.jpg';
-import { SITE_TITLE } from '../consts';
-import { Font } from 'astro:assets';
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_TITLE } from '../consts';
 
 interface Props {
 	title: string;
 	description: string;
-	image?: ImageMetadata;
+	image?: string;
+	noindex?: boolean;
+	structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const { title, description, image = DEFAULT_OG_IMAGE, noindex = false, structuredData } = Astro.props;
 ---
 
-<!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link
-	rel="alternate"
-	type="application/rss+xml"
-	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site)}
-/>
 <meta name="generator" content={Astro.generator} />
-
-<Font cssVariable="--font-atkinson" preload />
-
-<!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
-
-<!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
-
-<!-- Open Graph / Facebook -->
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+<meta name="theme-color" content="#1A1D21" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image.src, Astro.url)} />
-
-<!-- Twitter -->
+<meta property="og:image" content={new URL(image, Astro.site)} />
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image.src, Astro.url)} />
+<meta property="twitter:image" content={new URL(image, Astro.site)} />
+<meta property="twitter:site" content={SITE_TITLE} />
+{
+	structuredData && (
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+	)
+}

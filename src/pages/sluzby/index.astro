@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { SITE_URL } from '../../consts';
+import { buildBreadcrumbJsonLd, sortByTitle } from '../../lib/content';
+
+const services = sortByTitle(await getCollection('services'));
+const structuredData = buildBreadcrumbJsonLd([
+	{ name: 'Domov', item: SITE_URL },
+	{ name: 'Služby', item: `${SITE_URL}/sluzby/` },
+]);
+---
+
+<MainLayout title="Služby | CLG" description="Prehľad realizačných služieb CLG pre firemné flotily, technické prevádzky a B2B projekty." structuredData={structuredData}>
+	<PageHero
+		eyebrow="Realizačné služby"
+		title="Služby postavené na prevádzke, nie na efektoch."
+		lead="Od flotilového brandingu až po technické značenie. Každá služba má vlastnú SEO URL, ale komunikačne už hovorí jasne k B2B klientovi."
+		highlights={['Reklamné polepy', 'Autofólie a wrap', 'Bezpečnostné značenie', 'Fólie na budovy']}
+	/>
+
+	<section class="shell">
+		<div class="card-grid">
+			{
+				services.map((service) => (
+					<article class="card service-card">
+						<div class="image-frame service-image">
+							<img src={service.data.heroImage} alt={service.data.title} loading="lazy" />
+						</div>
+						<div class="service-body">
+							<p class="eyebrow">{service.data.audience}</p>
+							<h3>{service.data.title}</h3>
+							<p>{service.data.description}</p>
+							<ul class="bullet-list">
+								{service.data.deliverables.slice(0, 3).map((item) => <li>{item}</li>)}
+							</ul>
+							<a class="button-secondary" href={`/${service.data.slug}/`}>Prejsť na detail</a>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</section>
+</MainLayout>
+
+<style>
+	.service-card {
+		grid-column: span 4;
+		overflow: hidden;
+	}
+	.service-image {
+		aspect-ratio: 4 / 3;
+	}
+	.service-body {
+		display: grid;
+		gap: 1rem;
+		padding: 1.3rem;
+	}
+	@media (max-width: 900px) {
+		.service-card {
+			grid-column: span 6;
+		}
+	}
+	@media (max-width: 640px) {
+		.service-card {
+			grid-column: span 1;
+		}
+	}
+</style>

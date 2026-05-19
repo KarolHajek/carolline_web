@@ -1,0 +1,64 @@
+---
+interface Props {
+	eyebrow: string;
+	title: string;
+	lead: string;
+	highlights?: string[];
+	actions?: Array<{ href: string; label: string; secondary?: boolean }>;
+}
+
+const { eyebrow, title, lead, highlights = [], actions = [] } = Astro.props;
+---
+
+<section class="shell page-hero">
+	<div class="surface hero-panel">
+		<p class="eyebrow">{eyebrow}</p>
+		<h1>{title}</h1>
+		<p class="lead">{lead}</p>
+		{
+			actions.length > 0 && (
+				<div class="actions">
+					{actions.map((action) => (
+						<a class={action.secondary ? 'button-secondary' : 'button'} href={action.href}>
+							{action.label}
+						</a>
+					))}
+				</div>
+			)
+		}
+		{
+			highlights.length > 0 && (
+				<ul class="pill-list">
+					{highlights.map((item) => <li>{item}</li>)}
+				</ul>
+			)
+		}
+	</div>
+</section>
+
+<style>
+	.page-hero {
+		padding-top: 2.5rem;
+	}
+	.hero-panel {
+		padding: clamp(2rem, 6vw, 4rem);
+		background:
+			linear-gradient(140deg, rgba(0, 183, 225, 0.16), transparent 34%),
+			linear-gradient(180deg, rgba(18, 24, 32, 0.92), rgba(9, 13, 18, 0.94));
+	}
+	h1 {
+		max-width: 14ch;
+	}
+	.lead {
+		max-width: 46rem;
+		margin-top: 1rem;
+		font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+	}
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		margin-top: 1.8rem;
+		margin-bottom: 1.6rem;
+	}
+</style>

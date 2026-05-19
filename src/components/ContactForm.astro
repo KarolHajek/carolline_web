@@ -1,0 +1,136 @@
+---
+interface Props {
+	variant?: 'vseobecny' | 'material' | 'realizacia';
+	title?: string;
+	intro?: string;
+}
+
+const {
+	variant = 'vseobecny',
+	title = 'Pošlite nám dopyt',
+	intro = 'Napíšte nám, či riešite materiál, technický produkt alebo konkrétnu realizáciu. Ozveme sa s ďalším postupom.',
+} = Astro.props;
+---
+
+<section class="surface contact-box">
+	<div>
+		<p class="eyebrow">Dopyt a konzultácia</p>
+		<h2>{title}</h2>
+		<p class="intro">{intro}</p>
+	</div>
+	<form class="contact-form" method="post" action="/api/contact" data-contact-form>
+		<input type="hidden" name="inquiryType" value={variant} data-inquiry-type />
+		<div class="form-grid">
+			<label>
+				<span>Meno a firma</span>
+				<input name="name" placeholder="Meno, firma alebo oddelenie" required />
+			</label>
+			<label>
+				<span>Email</span>
+				<input type="email" name="email" placeholder="vas@email.sk" required />
+			</label>
+			<label>
+				<span>Telefón</span>
+				<input name="phone" placeholder="+421 ..." />
+			</label>
+			<label>
+				<span>Typ dopytu</span>
+				<select name="type" data-type-select>
+					<option value="vseobecny" selected={variant === 'vseobecny'}>Všeobecný dopyt</option>
+					<option value="material" selected={variant === 'material'}>Materiály a produkty</option>
+					<option value="realizacia" selected={variant === 'realizacia'}>Realizácia a montáž</option>
+				</select>
+			</label>
+		</div>
+		<label>
+			<span>Popis potreby</span>
+			<textarea name="message" rows="6" placeholder="Stručne popíšte projekt, typ materiálu alebo rozsah realizácie." required />
+		</label>
+		<input type="hidden" name="turnstileToken" value="" />
+		<div class="form-actions">
+			<button class="button" type="submit">Odoslať dopyt</button>
+			<p class="form-note">Formulár je pripravený pre Cloudflare Pages Function. Po doplnení `TURNSTILE_SECRET_KEY`, `CONTACT_RECIPIENT` a `RESEND_API_KEY` bude plne produkčný.</p>
+		</div>
+		<p class="status" aria-live="polite" data-form-status></p>
+	</form>
+</section>
+
+<script>
+	const form = document.querySelector('[data-contact-form]');
+	const status = document.querySelector('[data-form-status]');
+	const typeSelect = document.querySelector('[data-type-select]');
+	const inquiryType = document.querySelector('[data-inquiry-type]');
+
+	if (form instanceof HTMLFormElement && status instanceof HTMLElement && typeSelect instanceof HTMLSelectElement && inquiryType instanceof HTMLInputElement) {
+		typeSelect.addEventListener('change', () => {
+			inquiryType.value = typeSelect.value;
+		});
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			status.textContent = 'Odosielam dopyt...';
+
+			const formData = new FormData(form);
+			const payload = Object.fromEntries(formData.entries());
+
+			try {
+				const response = await fetch(form.action, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(payload),
+				});
+
+				const data = await response.json();
+
+				if (!response.ok) {
+					throw new Error(data.message || 'Formulár sa nepodarilo odoslať.');
+				}
+
+				status.textContent = data.message || 'Dopyt bol úspešne odoslaný.';
+				form.reset();
+			} catch (error) {
+				status.textContent = error instanceof Error ? error.message : 'Nastala chyba pri odosielaní formulára.';
+			}
+		});
+	}
+</script>
+
+<style>
+	.contact-box {
+		display: grid;
+		gap: 1.5rem;
+	}
+	.contact-form {
+		display: grid;
+		gap: 1rem;
+	}
+	label {
+		display: grid;
+		gap: 0.5rem;
+	}
+	label span {
+		color: var(--color-muted-strong);
+		font-size: 0.92rem;
+		font-weight: 700;
+	}
+	.intro {
+		margin-top: 1rem;
+		max-width: 42rem;
+	}
+	.form-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem;
+	}
+	.form-note,
+	.status {
+		font-size: 0.92rem;
+	}
+	.status {
+		min-height: 1.4rem;
+		color: var(--color-accent);
+	}
+</style>

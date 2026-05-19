@@ -1,49 +1,399 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getCollection } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+import { SITE_TITLE, SITE_URL } from '../consts';
+import { buildBreadcrumbJsonLd, getFeaturedReferences, getFeaturedServices, getSiteSettings, sortByTitle } from '../lib/content';
+
+const settings = await getSiteSettings();
+const services = await getFeaturedServices();
+const references = await getFeaturedReferences();
+const productLines = await getCollection('productLines');
+const brands = sortByTitle(await getCollection('brands'));
+
+const structuredData = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Organization',
+		name: settings.company.name,
+		url: SITE_URL,
+		email: settings.company.email,
+		telephone: settings.company.phone,
+		address: {
+			'@type': 'PostalAddress',
+			streetAddress: settings.company.primaryAddress.street,
+			postalCode: settings.company.primaryAddress.postalCode,
+			addressLocality: settings.company.primaryAddress.city,
+			addressCountry: 'SK',
+		},
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'LocalBusiness',
+		name: settings.company.name,
+		url: SITE_URL,
+		description: 'B2B partner pre fólie, technické produkty a realizačné služby.',
+		email: settings.company.email,
+		telephone: settings.company.phone,
+		openingHours: 'Mo-Fr 08:00-16:30',
+	},
+	buildBreadcrumbJsonLd([{ name: 'Domov', item: SITE_URL }]),
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
+<MainLayout title={SITE_TITLE} description="Nový B2B web CLG pre fólie, 3M technické produkty a profesionálne realizačné služby." structuredData={structuredData}>
+	<section class="shell hero">
+		<div class="hero-copy">
+			<p class="eyebrow">B2B partner pre firmy, fleet a technické prevádzky</p>
+			<h1>Fólie, technické produkty a realizácie pod jednou zodpovednosťou.</h1>
+			<p class="lead">
+				CLG prepája distribúciu materiálov značiek Avery Dennison a 3M s profesionálnou montážou, polepmi,
+				značením a technickým poradenstvom. Namiesto všeobecného katalógu dodávame zmysluplné riešenie pre
+				reálnu B2B prevádzku.
 			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
+			<div class="hero-actions">
+				<a class="button" href="/kontakt/?typ=material">Dopyt na materiály</a>
+				<a class="button-secondary" href="/kontakt/?typ=realizacia">Dopyt na realizáciu</a>
+			</div>
+			<ul class="pill-list">
+				<li>Predaj Avery fólií pre print aj wrap</li>
+				<li>3M štítky, lepidlá a technické produkty</li>
+				<li>Realizačný tím pre polepy, montáže a značenie</li>
 			</ul>
+		</div>
+		<div class="hero-visual surface">
+			<div class="hero-card hero-card-main">
+				<span>Distribúcia a technické riešenia</span>
+				<strong>Avery fólie, 3M produkty, odborné odporúčanie, B2B kontinuita dodávok.</strong>
+			</div>
+			<div class="hero-card">
+				<span>Realizácia a montáž</span>
+				<strong>Polepy vozidiel, značenie, autofólie, wrap a inštalácie v prevádzke.</strong>
+			</div>
+		</div>
+	</section>
+
+	<section class="shell stats">
+		<div class="card-grid">
+			{
+				settings.heroStats.map((item) => (
+					<article class="card stat-card">
+						<strong>{item.value}</strong>
+						<p>{item.label}</p>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="shell split-section">
+		<div class="section-intro">
+			<p class="eyebrow">Ako sme postavení</p>
+			<h2>Najprv správny materiál. Potom správna realizácia.</h2>
 			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
+				Nový web staviame na tom, čo vás odlišuje. Nie ste len realizačná firma a nie ste len predajca. Ste
+				B2B partner, ktorý vie odporučiť materiál, dodať ho a následne prevziať zodpovednosť aj za aplikáciu.
 			</p>
+		</div>
+		<div class="card-grid">
+			<article class="card split-card">
+				<p class="eyebrow">Distribúcia materiálov</p>
+				<h3>Pre firmy, agentúry a technické prevádzky</h3>
+				<ul class="bullet-list">
+					<li>Avery fólie pre wrap, print, branding a funkčné aplikácie</li>
+					<li>3M štítky, lepidlá a ďalšie technické riešenia</li>
+					<li>Odborné odporúčanie namiesto preťaženého produktového katalógu</li>
+				</ul>
+			</article>
+			<article class="card split-card">
+				<p class="eyebrow">Realizačná vetva</p>
+				<h3>Polepy, montáž a aplikácia v teréne</h3>
+				<ul class="bullet-list">
+					<li>Reklamné polepy a fleet branding</li>
+					<li>Autofólie, car wrap a ochranné riešenia</li>
+					<li>Bezpečnostné značenie vozidiel, fólie na budovy a výstražné prvky</li>
+				</ul>
+			</article>
+		</div>
+	</section>
+
+	<section class="shell">
+		<div class="section-intro">
+			<p class="eyebrow">Fólie a materiály</p>
+			<h2>Kľúčové B2B produktové línie</h2>
 			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
+				Prvá verzia webu nefunguje ako e-shop. Je to prehľadný katalóg s obchodným kontextom, aby klient
+				rýchlo pochopil, čo dodávate a na čo sa môže obrátiť.
 			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+		</div>
+		<div class="card-grid">
+			{
+				productLines.map((line) => (
+					<article class="card line-card">
+						<p class="eyebrow">{line.data.featuredBrands.join(' / ')}</p>
+						<h3>{line.data.title}</h3>
+						<p>{line.data.description}</p>
+						<ul class="bullet-list">
+							{line.data.useCases.map((item) => <li>{item}</li>)}
+						</ul>
+						<a class="button-secondary" href="/folie-materialy/">Zobraziť línie</a>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="shell">
+		<div class="section-intro">
+			<p class="eyebrow">Realizačné služby</p>
+			<h2>SEO silné služby nechávame na samostatných URL</h2>
+			<p>
+				Zachovávame hlavné service slugs, aby sa nestratila organická návštevnosť, ale obsahovo ich posúvame
+				do výrazne profesionálnejšieho B2B jazyka.
+			</p>
+		</div>
+		<div class="card-grid">
+			{
+				services.map((service) => (
+					<article class="card service-card">
+						<div class="image-frame service-image">
+							<img src={service.data.heroImage} alt={service.data.title} loading="lazy" />
+						</div>
+						<div class="service-body">
+							<p class="eyebrow">{service.data.shortTitle ?? service.data.title}</p>
+							<h3>{service.data.title}</h3>
+							<p>{service.data.description}</p>
+							<a class="button-secondary" href={`/${service.data.slug}/`}>Detail služby</a>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="shell">
+		<div class="section-intro">
+			<p class="eyebrow">Značky a dôveryhodnosť</p>
+			<h2>Silné značky dávajú zmysel až v spojení s poradenstvom a montážou</h2>
+			<p>
+				Web ich preto neukazuje len ako logá. Každú značku viažeme na to, kde prináša obchodnú a technickú
+				hodnotu pre klienta.
+			</p>
+		</div>
+		<div class="trust-row">
+			{settings.trustBadges.map((badge) => <span>{badge}</span>)}
+		</div>
+		<div class="card-grid brand-row">
+			{
+				brands.map((brand) => (
+					<article class="card brand-card">
+						<p class="eyebrow">{brand.data.logoLabel}</p>
+						<h3>{brand.data.title}</h3>
+						<p>{brand.data.description}</p>
+						<a class="button-secondary" href={`/znacky/${brand.data.slug}/`}>Detail značky</a>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="shell">
+		<div class="section-intro">
+			<p class="eyebrow">Vybrané realizácie</p>
+			<h2>Ukážky, ktoré potvrdzujú B2B smer</h2>
+			<p>
+				Referencie filtrujeme do zrozumiteľných obchodných typov: branding flotíl, technické označovanie a
+				funkčné fólie pre budovy či vozidlá.
+			</p>
+		</div>
+		<div class="card-grid">
+			{
+				references.map((reference) => (
+					<article class="card reference-card">
+						<div class="image-frame reference-image">
+							<img src={reference.data.image} alt={reference.data.title} loading="lazy" />
+						</div>
+						<div class="reference-body">
+							<p class="eyebrow">{reference.data.category}</p>
+							<h3>{reference.data.title}</h3>
+							<p>{reference.data.description}</p>
+							<ul class="pill-list">
+								{reference.data.tags.map((tag) => <li>{tag}</li>)}
+							</ul>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="shell cta-section">
+		<div class="surface cta-panel">
+			<div>
+				<p class="eyebrow">Dopyt a obchod</p>
+				<h2>Chcete materiál, technické odporúčanie alebo rovno realizáciu?</h2>
+				<p>
+					Web je pripravený viesť návštevníka do dopytu bez zbytočných prekážok. Presne tam chceme poslať aj
+					Cloudflare deploy workflow z GitHubu.
+				</p>
+			</div>
+			<div class="cta-actions">
+				<a class="button" href="/kontakt/?typ=material">Dopyt na materiály</a>
+				<a class="button-secondary" href="/kontakt/?typ=realizacia">Dopyt na realizáciu</a>
+			</div>
+		</div>
+	</section>
+</MainLayout>
+
+<style>
+	.hero {
+		display: grid;
+		grid-template-columns: 1.25fr 0.85fr;
+		gap: 1.4rem;
+		padding-top: 2.5rem;
+		align-items: stretch;
+	}
+	.hero-copy {
+		padding: clamp(2rem, 5vw, 4.2rem);
+		border-radius: var(--radius-lg);
+		background:
+			linear-gradient(135deg, rgba(0, 183, 225, 0.18), transparent 30%),
+			linear-gradient(180deg, rgba(18, 24, 32, 0.92), rgba(9, 13, 18, 0.98));
+		border: 1px solid rgba(255, 255, 255, 0.08);
+	}
+	.lead {
+		max-width: 44rem;
+		margin-top: 1rem;
+		font-size: clamp(1.05rem, 1.8vw, 1.24rem);
+	}
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		margin-block: 1.8rem;
+	}
+	.hero-visual {
+		display: grid;
+		gap: 1rem;
+		align-content: end;
+	}
+	.hero-card {
+		padding: 1.4rem;
+		border-radius: var(--radius-md);
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+	}
+	.hero-card span,
+	.stat-card strong {
+		display: block;
+	}
+	.hero-card span {
+		margin-bottom: 0.65rem;
+		color: var(--color-accent);
+		font-size: 0.82rem;
+		font-weight: 800;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+	.hero-card strong {
+		font-size: 1.35rem;
+		line-height: 1.2;
+	}
+	.hero-card-main {
+		min-height: 18rem;
+		place-content: end;
+	}
+	.stat-card,
+	.split-card,
+	.line-card,
+	.brand-card {
+		grid-column: span 3;
+		padding: 1.4rem;
+	}
+	.stat-card strong {
+		margin-bottom: 0.45rem;
+		font-family: var(--font-heading);
+		font-size: 2rem;
+		font-style: italic;
+		letter-spacing: -0.05em;
+	}
+	.split-card,
+	.line-card {
+		grid-column: span 6;
+	}
+	.line-card {
+		display: grid;
+		gap: 1rem;
+	}
+	.service-card,
+	.reference-card {
+		grid-column: span 4;
+		overflow: hidden;
+	}
+	.service-body,
+	.reference-body {
+		display: grid;
+		gap: 0.9rem;
+		padding: 1.3rem;
+	}
+	.service-image,
+	.reference-image {
+		aspect-ratio: 4 / 3;
+	}
+	.trust-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-bottom: 1.2rem;
+	}
+	.trust-row span {
+		padding: 0.8rem 1rem;
+		border-radius: 999px;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: rgba(255, 255, 255, 0.03);
+		font-size: 0.92rem;
+		color: var(--color-muted-strong);
+	}
+	.brand-row {
+		margin-top: 1rem;
+	}
+	.cta-panel {
+		display: flex;
+		justify-content: space-between;
+		gap: 1.5rem;
+		align-items: center;
+	}
+	.cta-panel p {
+		max-width: 42rem;
+		margin-top: 1rem;
+	}
+	.cta-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+	@media (max-width: 900px) {
+		.hero,
+		.cta-panel {
+			grid-template-columns: 1fr;
+			display: grid;
+		}
+		.stat-card,
+		.split-card,
+		.line-card,
+		.brand-card,
+		.service-card,
+		.reference-card {
+			grid-column: span 6;
+		}
+	}
+	@media (max-width: 640px) {
+		.stat-card,
+		.split-card,
+		.line-card,
+		.brand-card,
+		.service-card,
+		.reference-card {
+			grid-column: span 1;
+		}
+	}
+</style>

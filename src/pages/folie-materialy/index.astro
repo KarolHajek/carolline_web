@@ -1,0 +1,117 @@
+---
+import { getCollection, render } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { SITE_URL } from '../../consts';
+import { buildBreadcrumbJsonLd, sortByTitle } from '../../lib/content';
+
+const productLines = await getCollection('productLines');
+const brands = sortByTitle(await getCollection('brands'));
+const renderedLines = await Promise.all(productLines.map(async (line) => ({ line, rendered: await render(line) })));
+const structuredData = buildBreadcrumbJsonLd([
+	{ name: 'Domov', item: SITE_URL },
+	{ name: 'Fólie a materiály', item: `${SITE_URL}/folie-materialy/` },
+]);
+---
+
+<MainLayout title="Fólie a materiály | CLG" description="Katalóg B2B produktových línií CLG: wrap a print fólie, solárne a bezpečnostné fólie, 3M technické produkty." structuredData={structuredData}>
+	<PageHero
+		eyebrow="Fólie a materiály"
+		title="Katalóg postavený na obchodnom zmysle."
+		lead="Klient nechce tráviť čas medzi desiatkami nejasných kategórií. Na webe preto ukazujeme produktové línie cez použitie, prínos a typ zákazky."
+		highlights={['Avery pre print aj wrap', '3M štítky a lepidlá', 'Špeciálne materiály pre bezpečnosť a prevádzku']}
+		actions={[
+			{ href: '/kontakt/?typ=material', label: 'Dopyt na materiály' },
+			{ href: '/sluzby/', label: 'Pozrieť realizačné služby', secondary: true },
+		]}
+	/>
+
+	<section class="shell">
+		<div class="card-grid">
+			{
+				renderedLines.map(({ line, rendered }) => (
+					<article class="card line-card">
+						<p class="eyebrow">{line.data.featuredBrands.join(' / ')}</p>
+						<h2>{line.data.title}</h2>
+						<p>{line.data.description}</p>
+						<div class="line-copy">
+							<rendered.Content />
+						</div>
+						<div class="subgrid">
+							<div>
+								<h3>Typické použitia</h3>
+								<ul class="bullet-list">
+									{line.data.useCases.map((item) => <li>{item}</li>)}
+								</ul>
+							</div>
+							<div>
+								<h3>Prečo cez CLG</h3>
+								<ul class="bullet-list">
+									{line.data.benefits.map((item) => <li>{item}</li>)}
+								</ul>
+							</div>
+						</div>
+						<a class="button" href="/kontakt/?typ=material">{line.data.ctaLabel}</a>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="shell">
+		<div class="section-intro">
+			<p class="eyebrow">Preferované značky</p>
+			<h2>Značky s jasným obchodným aj technickým príbehom</h2>
+			<p>
+				V prvej verzii dávame väčší priestor značkám, ktoré sú najdôležitejšie pre B2B positioning webu.
+			</p>
+		</div>
+		<div class="card-grid">
+			{
+				brands.map((brand) => (
+					<article class="card brand-card">
+						<p class="eyebrow">{brand.data.logoLabel}</p>
+						<h3>{brand.data.title}</h3>
+						<p>{brand.data.description}</p>
+						<a class="button-secondary" href={`/znacky/${brand.data.slug}/`}>Prejsť na značku</a>
+					</article>
+				))
+			}
+		</div>
+	</section>
+</MainLayout>
+
+<style>
+	.line-card {
+		grid-column: span 12;
+		padding: clamp(1.3rem, 3vw, 2rem);
+		display: grid;
+		gap: 1rem;
+	}
+	.line-copy :global(p) + :global(p) {
+		margin-top: 1rem;
+	}
+	.subgrid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.brand-card {
+		grid-column: span 6;
+		padding: 1.4rem;
+		display: grid;
+		gap: 1rem;
+	}
+	@media (max-width: 900px) {
+		.subgrid,
+		.brand-card {
+			grid-template-columns: 1fr;
+			grid-column: span 6;
+		}
+	}
+	@media (max-width: 640px) {
+		.brand-card {
+			grid-column: span 1;
+		}
+	}
+</style>

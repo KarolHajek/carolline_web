@@ -1,0 +1,73 @@
+---
+import { getCollection, render } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { SITE_URL } from '../../consts';
+import { buildBreadcrumbJsonLd } from '../../lib/content';
+
+export async function getStaticPaths() {
+	const brands = await getCollection('brands');
+	return brands.map((brand) => ({
+		params: { slug: brand.data.slug },
+		props: { brand },
+	}));
+}
+
+const { brand } = Astro.props;
+const { Content } = await render(brand);
+const structuredData = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Brand',
+		name: brand.data.name,
+		description: brand.data.description,
+	},
+	buildBreadcrumbJsonLd([
+		{ name: 'Domov', item: SITE_URL },
+		{ name: 'Značky', item: `${SITE_URL}/folie-materialy/` },
+		{ name: brand.data.name, item: `${SITE_URL}/znacky/${brand.data.slug}/` },
+	]),
+];
+---
+
+<MainLayout title={`${brand.data.title} | CLG`} description={brand.data.description} structuredData={structuredData}>
+	<PageHero
+		eyebrow={brand.data.heroEyebrow}
+		title={brand.data.title}
+		lead={brand.data.heroLead}
+		highlights={brand.data.strengths}
+		actions={[
+			{ href: '/kontakt/?typ=material', label: brand.data.ctaLabel },
+			{ href: '/folie-materialy/', label: 'Späť na materiály', secondary: true },
+		]}
+	/>
+
+	<section class="shell brand-grid">
+		<article class="surface brand-copy">
+			<Content />
+		</article>
+		<aside class="surface">
+			<p class="eyebrow">Produktové zameranie</p>
+			<h2>{brand.data.name}</h2>
+			<ul class="bullet-list">
+				{brand.data.productFocus.map((item) => <li>{item}</li>)}
+			</ul>
+		</aside>
+	</section>
+</MainLayout>
+
+<style>
+	.brand-grid {
+		display: grid;
+		grid-template-columns: 1.15fr 0.85fr;
+		gap: 1.2rem;
+	}
+	.brand-copy :global(p) + :global(p) {
+		margin-top: 1rem;
+	}
+	@media (max-width: 900px) {
+		.brand-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

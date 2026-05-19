@@ -1,0 +1,45 @@
+{
+  "company": {
+    "name": "Carol line Group s.r.o.",
+    "tradingName": "CLG",
+    "phone": "02/4820 8200",
+    "email": "sluzby@carolline.sk",
+    "primaryAddress": {
+      "label": "Prevádzka a konzultácie",
+      "street": "Beckovská 38/A",
+      "postalCode": "821 04",
+      "city": "Bratislava"
+    },
+    "secondaryAddress": {
+      "label": "Sídlo spoločnosti",
+      "street": "Turbínová 41/B",
+      "postalCode": "831 04",
+      "city": "Bratislava"
+    },
+    "workingHours": "Po-Pi: 8:00-16:30",
+    "ico": "56842082",
+    "dic": "2122477181",
+    "icDph": "SK2122477181"
+  },
+  "navigation": [
+    { "label": "Služby", "href": "/sluzby/" },
+    { "label": "Fólie a materiály", "href": "/folie-materialy/" },
+    { "label": "Značky", "href": "/znacky/avery-dennison/" },
+    { "label": "Realizácie", "href": "/realizacie/" },
+    { "label": "O nás", "href": "/o-nas/" },
+    { "label": "Kontakt", "href": "/kontakt/" }
+  ],
+  "heroStats": [
+    { "value": "B2B", "label": "zameranie na firmy, fleet klientov a partnerov" },
+    { "value": "SK + CZ", "label": "dodávky a podpora pre slovenský aj český trh" },
+    { "value": "3M + Avery", "label": "silné značky pre technické a vizuálne aplikácie" },
+    { "value": "1 partner", "label": "od materiálu cez návrh až po profesionálnu montáž" }
+  ],
+  "trustBadges": [
+    "ISO 9001:2015",
+    "Avery Dennison",
+    "3M",
+    "911 Signal",
+    "Heskins"
+  ]
+}

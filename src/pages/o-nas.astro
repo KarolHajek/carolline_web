@@ -1,0 +1,72 @@
+---
+import { getEntry, render } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { SITE_URL } from '../consts';
+import { buildBreadcrumbJsonLd } from '../lib/content';
+
+const page = await getEntry('pages', 'o-nas');
+
+if (!page) {
+	throw new Error('Missing page content for o-nas.');
+}
+
+const { Content } = await render(page);
+const structuredData = buildBreadcrumbJsonLd([
+	{ name: 'Domov', item: SITE_URL },
+	{ name: 'O nás', item: `${SITE_URL}/o-nas/` },
+]);
+---
+
+<MainLayout title={page.data.seoTitle ?? page.data.title} description={page.data.description} structuredData={structuredData}>
+	<PageHero
+		eyebrow={page.data.heroEyebrow}
+		title={page.data.title}
+		lead={page.data.heroLead}
+		highlights={page.data.highlights}
+		actions={[
+			{ href: '/kontakt/?typ=vseobecny', label: 'Kontaktovať CLG' },
+			{ href: '/folie-materialy/', label: 'Pozrieť materiály', secondary: true },
+		]}
+	/>
+
+	<section class="shell about-grid">
+		<article class="surface prose">
+			<Content />
+		</article>
+		<aside class="surface about-side">
+			<p class="eyebrow">Prečo to funguje</p>
+			<h2>B2B nastavenie, nie len prezentačný web</h2>
+			<ul class="bullet-list">
+				{page.data.highlights.map((item) => <li>{item}</li>)}
+				<li>Obchodný tón komunikácie postavený na riešení, nie na všeobecnom marketingu.</li>
+				<li>Priamo previazané značky, produktové línie a realizačné služby.</li>
+			</ul>
+		</aside>
+	</section>
+</MainLayout>
+
+<style>
+	.about-grid {
+		display: grid;
+		grid-template-columns: 1.15fr 0.85fr;
+		gap: 1.2rem;
+	}
+	.prose {
+		display: grid;
+		gap: 1rem;
+	}
+	.prose :global(p) {
+		margin-top: 1rem;
+	}
+	.about-side {
+		display: grid;
+		gap: 1rem;
+		align-content: start;
+	}
+	@media (max-width: 900px) {
+		.about-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

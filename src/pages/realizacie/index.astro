@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { SITE_URL } from '../../consts';
+import { buildBreadcrumbJsonLd } from '../../lib/content';
+
+const references = await getCollection('references');
+const structuredData = buildBreadcrumbJsonLd([
+	{ name: 'Domov', item: SITE_URL },
+	{ name: 'Realizácie', item: `${SITE_URL}/realizacie/` },
+]);
+---
+
+<MainLayout title="Realizácie | CLG" description="Výber realizácií CLG pre fleet branding, fólie na budovy a bezpečnostné značenie vozidiel." structuredData={structuredData}>
+	<PageHero
+		eyebrow="Realizácie"
+		title="Referencie, ktoré podporujú B2B dôveryhodnosť."
+		lead="Výber realizácií sme upratali do jasných obchodných typov. Menej náhodných galérií, viac príkladov, ktoré dávajú zmysel firemnému klientovi."
+		highlights={['Fleet branding', 'Fólie na budovy', 'Bezpečnostné značenie']}
+	/>
+
+	<section class="shell">
+		<div class="card-grid">
+			{
+				references.map((reference) => (
+					<article class="card reference-card">
+						<div class="image-frame reference-image">
+							<img src={reference.data.image} alt={reference.data.title} loading="lazy" />
+						</div>
+						<div class="reference-body">
+							<p class="eyebrow">{reference.data.category}</p>
+							<h3>{reference.data.title}</h3>
+							<p>{reference.data.description}</p>
+							<p><strong>Klient:</strong> {reference.data.client}</p>
+							<ul class="pill-list">
+								{reference.data.tags.map((tag) => <li>{tag}</li>)}
+							</ul>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</section>
+</MainLayout>
+
+<style>
+	.reference-card {
+		grid-column: span 4;
+		overflow: hidden;
+	}
+	.reference-image {
+		aspect-ratio: 4 / 3;
+	}
+	.reference-body {
+		display: grid;
+		gap: 0.9rem;
+		padding: 1.3rem;
+	}
+	.reference-body strong {
+		color: var(--color-text);
+	}
+	@media (max-width: 900px) {
+		.reference-card {
+			grid-column: span 6;
+		}
+	}
+	@media (max-width: 640px) {
+		.reference-card {
+			grid-column: span 1;
+		}
+	}
+</style>

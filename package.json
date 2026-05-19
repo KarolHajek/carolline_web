@@ -2,6 +2,7 @@
   "name": "web_carolline",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
   "engines": {
     "node": ">=22.12.0"
   },
@@ -12,9 +13,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.6",
-    "@astrojs/rss": "^4.0.18",
+    "@astrojs/cloudflare": "^13.5.2",
     "@astrojs/sitemap": "^3.7.2",
+    "@fontsource-variable/manrope": "^5.2.8",
+    "@fontsource/exo-2": "^5.2.8",
     "astro": "^6.3.5",
     "sharp": "^0.34.3"
   }

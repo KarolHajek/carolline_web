@@ -1,0 +1,175 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { SITE_URL } from '../consts';
+import { buildBreadcrumbJsonLd } from '../lib/content';
+
+export async function getStaticPaths() {
+	const services = await getCollection('services');
+	return services.map((service) => ({
+		params: { serviceSlug: service.data.slug },
+		props: { service },
+	}));
+}
+
+const { service } = Astro.props;
+const { Content } = await render(service);
+const relatedLines = (await Promise.all(service.data.relatedProductLines.map((slug) => getEntry('productLines', slug)))).filter(
+	Boolean,
+);
+
+const structuredData = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Service',
+		name: service.data.title,
+		description: service.data.description,
+		provider: {
+			'@type': 'Organization',
+			name: 'Carol line Group s.r.o.',
+		},
+	},
+	buildBreadcrumbJsonLd([
+		{ name: 'Domov', item: SITE_URL },
+		{ name: 'Služby', item: `${SITE_URL}/sluzby/` },
+		{ name: service.data.title, item: `${SITE_URL}/${service.data.slug}/` },
+	]),
+];
+---
+
+<MainLayout title={`${service.data.title} | CLG`} description={service.data.description} structuredData={structuredData}>
+	<PageHero
+		eyebrow={service.data.heroEyebrow}
+		title={service.data.title}
+		lead={service.data.heroLead}
+		highlights={service.data.deliverables}
+		actions={[
+			{ href: '/kontakt/?typ=realizacia', label: 'Dopyt na realizáciu' },
+			{ href: '/sluzby/', label: 'Všetky služby', secondary: true },
+		]}
+	/>
+
+	<section class="shell service-grid">
+		<article class="surface service-content">
+			<div class="image-frame hero-image">
+				<img src={service.data.heroImage} alt={service.data.title} />
+			</div>
+			<div class="copy">
+				<Content />
+			</div>
+			<div class="subgrid">
+				<div class="surface inset">
+					<p class="eyebrow">Pre koho</p>
+					<h3>{service.data.audience}</h3>
+				</div>
+				<div class="surface inset">
+					<p class="eyebrow">Postup</p>
+					<ol class="process-list">
+						{service.data.process.map((step) => <li>{step}</li>)}
+					</ol>
+				</div>
+			</div>
+		</article>
+		<aside class="side-stack">
+			<section class="surface">
+				<p class="eyebrow">Výhody služby</p>
+				<ul class="benefit-list">
+					{
+						service.data.benefits.map((item) => (
+							<li>
+								<strong>{item.title}</strong>
+								<p>{item.text}</p>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+			<section class="surface">
+				<p class="eyebrow">Súvisiace materiály</p>
+				<ul class="related-list">
+					{
+						relatedLines.map((line) => (
+							<li>
+								<strong>{line.data.title}</strong>
+								<p>{line.data.description}</p>
+								<a href="/folie-materialy/">Pozrieť línie</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</aside>
+	</section>
+
+	<section class="shell">
+		<ContactForm
+			variant="realizacia"
+			title={`Dopyt na službu: ${service.data.title}`}
+			intro="Pošlite základné informácie o vozidle, ploche alebo rozsahu zákazky. Pri B2B projektoch si následne doplníme všetky technické podklady."
+		/>
+	</section>
+</MainLayout>
+
+<style>
+	.service-grid {
+		display: grid;
+		grid-template-columns: 1.15fr 0.85fr;
+		gap: 1.2rem;
+	}
+	.service-content {
+		display: grid;
+		gap: 1rem;
+	}
+	.hero-image {
+		aspect-ratio: 16 / 9;
+	}
+	.copy :global(p) + :global(p) {
+		margin-top: 1rem;
+	}
+	.subgrid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.inset {
+		background: rgba(255, 255, 255, 0.03);
+	}
+	.process-list {
+		margin: 0;
+		padding-left: 1.2rem;
+		display: grid;
+		gap: 0.8rem;
+		color: var(--color-muted);
+	}
+	.side-stack {
+		display: grid;
+		gap: 1rem;
+		align-content: start;
+	}
+	.benefit-list,
+	.related-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 1rem;
+	}
+	.benefit-list strong,
+	.related-list strong {
+		display: block;
+		margin-bottom: 0.35rem;
+		color: var(--color-text);
+	}
+	.related-list a {
+		display: inline-flex;
+		margin-top: 0.65rem;
+	}
+	@media (max-width: 960px) {
+		.service-grid,
+		.subgrid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

@@ -1,0 +1,49 @@
+---
+import { getEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_NAME } from '../consts';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+	noindex?: boolean;
+}
+
+const settings = await getEntry('settings', 'site');
+
+if (!settings) {
+	throw new Error('Missing site settings entry.');
+}
+
+const {
+	title = SITE_NAME,
+	description = SITE_DESCRIPTION,
+	image,
+	structuredData,
+	noindex = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="sk">
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			image={image}
+			structuredData={structuredData}
+			noindex={noindex}
+		/>
+	</head>
+	<body>
+		<Header navigation={settings.data.navigation} />
+		<main>
+			<slot />
+		</main>
+		<Footer settings={settings.data} />
+	</body>
+</html>

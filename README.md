@@ -1,63 +1,78 @@
-# Astro Starter Kit: Blog
+# CLG / Carolline.sk
 
-```sh
-npm create astro@latest -- --template blog
+Nový B2B web pre `Carol line Group s.r.o.` postavený na `Astro` s obsahom v content collections a deploy modelom `GitHub -> Cloudflare Pages`.
+
+## Stack
+
+- `Astro` pre statický, rýchly a SEO orientovaný web
+- `Content Collections` pre správu obsahu služieb, značiek a produktových línií
+- `Cloudflare Pages Functions` pre spracovanie kontaktného formulára
+- `GitHub Actions` workflow pre build kontrolu pri pushi a pull requestoch
+
+## Lokálny vývoj
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Build produkčného výstupu:
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+```bash
+npm run build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Obsahová štruktúra
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `src/content/pages/` statické stránky ako `o-nas` a `kontakt`
+- `src/content/services/` root-level SEO služby ako `/autofolie/` alebo `/reklamne-polepy/`
+- `src/content/product-lines/` B2B katalóg materiálov a technických produktov
+- `src/content/brands/` značky ako `Avery Dennison` a `3M`
+- `src/content/references/` vybrané realizácie
+- `src/content/settings/site.json` globálne kontakty, navigácia a trust prvky
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+## GitHub workflow
 
-Any static assets, like images, can be placed in the `public/` directory.
+Repo je pripravené na verzovanie a deploy z GitHubu:
 
-## 🧞 Commands
+- workflow súbor: `.github/workflows/ci.yml`
+- spúšťa `npm ci` a `npm run build`
+- odporúčaný hlavný branch: `main`
 
-All commands are run from the root of the project, from a terminal:
+Odporúčaný postup:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+1. Vytvoriť nový GitHub repozitár.
+2. Nastaviť `main` ako produkčný branch.
+3. Pripojiť repozitár do `Cloudflare Pages`.
+4. Nastaviť build command na `npm run build`.
+5. Nastaviť output directory na `dist`.
 
-## 👀 Want to learn more?
+## Cloudflare Pages a formulár
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Formulár používa `functions/api/contact.ts`.
 
-## Credit
+Pre produkčné odosielanie treba v Cloudflare Pages doplniť environment variables:
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+- `CONTACT_RECIPIENT`
+- `RESEND_API_KEY`
+- `CONTACT_SENDER`
+- `TURNSTILE_SECRET_KEY`
+
+Poznámka:
+
+- frontend formulára je pripravený aj bez týchto hodnôt
+- bez env premenných endpoint korektne vráti konfiguračnú chybu, aby bolo jasné, čo chýba
+
+## SEO a migrácia
+
+- nové routy zachovávajú kľúčové service URL
+- staré blog URL sú presmerované cez `public/_redirects`
+- staré `portfolio_page/*` rieši `410 Gone` cez `functions/portfolio_page/[[path]].ts`
+- `robots.txt` a `sitemap-index.xml` sú súčasťou build výstupu
+
+## Ďalší krok pred produkciou
+
+- doplniť originál loga ideálne v `SVG`
+- napojiť Cloudflare Pages na finálny GitHub repozitár
+- doplniť Turnstile site key do frontendu, ak sa bude používať widget
+- potvrdiť finálny recipient email pre dopyty
