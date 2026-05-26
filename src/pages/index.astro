@@ -13,7 +13,6 @@ const brands = sortByTitle(await getCollection('brands'));
 const heroImage = 'https://carolline.sk/wp-content/uploads/2025/05/car-wrapping-with-foil-car-service.jpg';
 const workshopImage = 'https://carolline.sk/wp-content/uploads/2025/03/avery-instalacia-folii.png';
 const fleetImage = 'https://carolline.sk/wp-content/uploads/2025/05/reklamny-polep-resort.jpeg';
-const filmImage = 'https://carolline.sk/wp-content/uploads/2025/03/autofolie-solarnefolie-ukazka-2.jpeg';
 
 const structuredData = [
 	{
@@ -46,158 +45,136 @@ const structuredData = [
 ---
 
 <MainLayout title={SITE_TITLE} description="CLG je B2B partner pre Avery fólie, 3M technické produkty, značenie vozidiel a profesionálnu realizáciu polepov." structuredData={structuredData}>
-	<section class="landing-hero" style={`--hero-image: url('${heroImage}')`}>
-		<div class="shell hero-inner">
-			<div class="hero-copy">
-				<p class="eyebrow">B2B distribúcia a realizácia</p>
-				<h1>CLG</h1>
-				<p class="hero-subtitle">Fólie, technické produkty a profesionálne aplikácie pre firemnú prevádzku.</p>
-				<p class="hero-lead">
-					Dodávame Avery materiály pre print a wrap, 3M technické produkty, štítky a lepidlá. Zároveň
-					realizujeme polepy vozidiel, ochranné fólie, značenie a montáže pre firmy, flotily a technické tímy.
-				</p>
-				<div class="hero-actions">
-					<a class="button" href="/kontakt/?typ=material">Dopyt na materiály</a>
-					<a class="button-secondary" href="/kontakt/?typ=realizacia">Dopyt na realizáciu</a>
-				</div>
-			</div>
-
-			<div class="hero-specs" aria-label="Kľúčové zameranie CLG">
-				<div>
-					<span>01</span>
-					<strong>Avery print / wrap</strong>
-					<p>Materiály pre branding, flotily, retail a aplikácie s nárokmi na životnosť.</p>
-				</div>
-				<div>
-					<span>02</span>
-					<strong>3M technické produkty</strong>
-					<p>Štítky, lepidlá, funkčné fólie a materiály pre B2B prevádzky.</p>
-				</div>
-				<div>
-					<span>03</span>
-					<strong>Montáž a aplikácia</strong>
-					<p>Polepy vozidiel, značenie, car wrap, autofólie a fólie na budovy.</p>
-				</div>
+	<section class="hero" style={`--hero-image: url('${heroImage}')`}>
+		<div class="shell hero-content">
+			<p class="eyebrow">Carol line Group</p>
+			<h1>CLG</h1>
+			<p class="hero-title">B2B partner pre fólie, technické produkty a profesionálnu aplikáciu.</p>
+			<p class="hero-lead">
+				Dodávame Avery materiály pre print a wrap, 3M technické produkty, štítky a lepidlá. Zároveň realizujeme
+				reklamné polepy, značenie vozidiel, autofólie, ochranu laku a fólie na budovy.
+			</p>
+			<div class="hero-actions">
+				<a class="button" href="/kontakt/?typ=material">Dopyt na materiály</a>
+				<a class="button-secondary" href="/kontakt/?typ=realizacia">Dopyt na realizáciu</a>
 			</div>
 		</div>
 	</section>
 
-	<section class="shell proof-strip" aria-label="Dôveryhodnosť">
+	<section class="shell trust-bar" aria-label="Značky a dôveryhodnosť">
 		{settings.trustBadges.map((badge) => <span>{badge}</span>)}
 	</section>
 
-	<section class="shell intro-system">
-		<div class="section-intro">
-			<p class="eyebrow">Firemný partner, nie iba montážna dielňa</p>
-			<h2>Materiál, technické odporúčanie a realizácia v jednom procese.</h2>
-			<p>
-				Súčasný obsah z carolline.sk sme preložili do B2B jazyka: bezpečnosť, reklama, ochrana, komfort a
-				technické riešenia pre vozidlá, budovy a priemysel. Web má jasne ukázať, že CLG vie dodať materiál aj
-				prevziať zodpovednosť za výsledok.
-			</p>
+	<section class="shell intro">
+		<div>
+			<p class="eyebrow">Čo robíme</p>
+			<h2>Materiál aj realizácia v jednom zodpovednom procese.</h2>
 		</div>
-		<div class="system-grid">
-			<article>
-				<span class="kicker">Distribúcia</span>
-				<h3>Fólie a technické produkty</h3>
-				<ul class="bullet-list">
-					<li>Avery Dennison fólie pre tlač, wrap a solárne aplikácie.</li>
-					<li>3M štítky, lepidlá a technické riešenia podľa podkladu a prevádzky.</li>
-					<li>Podpora pri výbere materiálu pre opakované B2B zadania.</li>
-				</ul>
-			</article>
-			<article>
-				<span class="kicker">Realizácia</span>
-				<h3>Polepy, značenie a montáž</h3>
-				<ul class="bullet-list">
-					<li>Reklamné polepy, fleet branding a car wrap.</li>
-					<li>Reflexné a výstražné značenie vrátane riešení podľa EHK 104.</li>
-					<li>Autofólie, ochrana laku a fólie na budovy pre komfort aj bezpečnosť.</li>
-				</ul>
-			</article>
-		</div>
+		<p>
+			Carolline dnes nie je len firma na polepy. Web staviame ako B2B prezentáciu pre firmy, fleet klientov,
+			technické prevádzky a partnerov, ktorí potrebujú spoľahlivý materiál, odborné odporúčanie a výsledok, ktorý
+			vydrží reálnu prevádzku.
+		</p>
 	</section>
 
-	<section class="media-band">
-		<div class="shell media-grid">
-			<img src={workshopImage} alt="Profesionálna aplikácia fólie v dielni CLG" loading="lazy" />
-			<img src={fleetImage} alt="Reklamný polep vozidla pre firemnú prezentáciu" loading="lazy" />
-			<img src={filmImage} alt="Aplikácia solárnej autofólie" loading="lazy" />
-		</div>
+	<section class="shell capability-grid">
+		<article>
+			<span>01</span>
+			<h3>Distribúcia materiálov</h3>
+			<p>Avery Dennison fólie pre wrap, print, branding a solárne aplikácie. Výber podľa účelu, podkladu a očakávanej životnosti.</p>
+		</article>
+		<article>
+			<span>02</span>
+			<h3>3M technické produkty</h3>
+			<p>Štítky, lepidlá a funkčné materiály pre označovanie, výrobu, servis a technické B2B zadania.</p>
+		</article>
+		<article>
+			<span>03</span>
+			<h3>Aplikácia a montáž</h3>
+			<p>Polepy vozidiel, značenie, car wrap, autofólie, ochrana laku a fólie na budovy od skúseného realizačného tímu.</p>
+		</article>
 	</section>
 
-	<section class="shell product-section">
-		<div class="section-header">
-			<div>
-				<p class="eyebrow">Katalóg + dopyt</p>
-				<h2>Produktové línie pre B2B klientov</h2>
+	<section class="visual-proof">
+		<div class="shell visual-grid">
+			<img class="visual-large" src={workshopImage} alt="Aplikácia fólie v dielni CLG" loading="lazy" />
+			<img src={fleetImage} alt="Reklamný polep vozidla" loading="lazy" />
+			<div class="visual-note">
+				<p class="eyebrow">Praktické riešenia</p>
+				<h2>Od bezpečnosti cez reklamu až po komfort.</h2>
+				<p>
+					Aktuálny obsah z carolline.sk zachovávame, ale upratujeme ho do jasnej firemnej logiky: materiály,
+					realizácie a služby pre opakované B2B zadania.
+				</p>
 			</div>
-			<p>
-				Bez e-shopového šumu. Každá línia vysvetľuje použitie, obchodný prínos a dôvod, prečo má klient riešiť
-				materiál aj aplikáciu cez CLG.
-			</p>
 		</div>
-		<div class="technical-list">
+	</section>
+
+	<section class="shell products">
+		<div class="section-head">
+			<div>
+				<p class="eyebrow">Fólie a materiály</p>
+				<h2>Katalóg bez e-shopového šumu</h2>
+			</div>
+			<a class="text-link" href="/folie-materialy/">Všetky produktové línie</a>
+		</div>
+		<div class="product-list">
 			{
 				productLines.map((line, index) => (
-					<article>
+					<a href="/folie-materialy/">
 						<span>{String(index + 1).padStart(2, '0')}</span>
 						<div>
 							<h3>{line.data.title}</h3>
 							<p>{line.data.description}</p>
 						</div>
-						<ul>
-							{line.data.useCases.slice(0, 3).map((item) => <li>{item}</li>)}
-						</ul>
-						<a href="/folie-materialy/">Detail</a>
-					</article>
-				))
-			}
-		</div>
-	</section>
-
-	<section class="shell services-section">
-		<div class="section-header">
-			<div>
-				<p class="eyebrow">Realizačné služby</p>
-				<h2>Služby pre vozidlá, flotily a prevádzky</h2>
-			</div>
-			<p>
-				Zachovávame pôvodné silné témy webu: bezpečnosť, reklamu, ochranu laku a komfort. Každá služba má
-				vlastnú URL a jasné CTA na dopyt.
-			</p>
-		</div>
-		<div class="service-grid">
-			{
-				services.map((service) => (
-					<a class="service-item" href={`/${service.data.slug}/`}>
-						<img src={service.data.heroImage} alt={service.data.title} loading="lazy" />
-						<div>
-							<span>{service.data.shortTitle ?? service.data.title}</span>
-							<h3>{service.data.title}</h3>
-							<p>{service.data.description}</p>
-						</div>
+						<strong>{line.data.featuredBrands.join(' / ')}</strong>
 					</a>
 				))
 			}
 		</div>
 	</section>
 
-	<section class="shell brand-section">
+	<section class="services">
+		<div class="shell">
+			<div class="section-head">
+				<div>
+					<p class="eyebrow">Realizačné služby</p>
+					<h2>Pre vozidlá, flotily, budovy a prevádzky</h2>
+				</div>
+				<a class="text-link" href="/sluzby/">Prehľad služieb</a>
+			</div>
+			<div class="service-grid">
+				{
+					services.map((service) => (
+						<a class="service-card" href={`/${service.data.slug}/`}>
+							<img src={service.data.heroImage} alt={service.data.title} loading="lazy" />
+							<div>
+								<span>{service.data.shortTitle ?? service.data.title}</span>
+								<h3>{service.data.title}</h3>
+								<p>{service.data.description}</p>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="shell brands">
 		<div class="brand-copy">
-			<p class="eyebrow">Značky a zodpovednosť</p>
-			<h2>Silné značky nestačia. Rozhoduje správne použitie.</h2>
+			<p class="eyebrow">Značky</p>
+			<h2>Silné portfólio potrebuje správne odporúčanie.</h2>
 			<p>
-				3M a Avery Dennison majú zmysel vtedy, keď klient vie, ktorý materiál patrí na ktorý podklad, akú má mať
-				životnosť a ako sa bude aplikovať. Preto je CLG nastavené ako obchodný aj realizačný partner.
+				Značky ako 3M a Avery Dennison dávajú najväčší zmysel vtedy, keď sú správne zvolené pre konkrétny
+				podklad, expozíciu a spôsob používania.
 			</p>
 		</div>
-		<div class="brand-grid">
+		<div class="brand-list">
 			{
 				brands.map((brand) => (
 					<a href={`/znacky/${brand.data.slug}/`}>
 						<span>{brand.data.logoLabel}</span>
-						<strong>{brand.data.title}</strong>
+						<h3>{brand.data.title}</h3>
 						<p>{brand.data.description}</p>
 					</a>
 				))
@@ -205,13 +182,13 @@ const structuredData = [
 		</div>
 	</section>
 
-	<section class="shell references-section">
-		<div class="section-header">
+	<section class="shell references">
+		<div class="section-head">
 			<div>
 				<p class="eyebrow">Realizácie</p>
-				<h2>Práca, ktorá má držať v prevádzke</h2>
+				<h2>Ukážky práce v prevádzke</h2>
 			</div>
-			<a class="button-secondary" href="/realizacie/">Všetky realizácie</a>
+			<a class="text-link" href="/realizacie/">Všetky realizácie</a>
 		</div>
 		<div class="reference-grid">
 			{
@@ -229,346 +206,449 @@ const structuredData = [
 		</div>
 	</section>
 
-	<section class="shell final-cta">
-		<div>
-			<p class="eyebrow">Dopyt a konzultácia</p>
-			<h2>Pošlite zadanie. Navrhneme materiál, postup alebo realizáciu.</h2>
-		</div>
-		<div class="final-actions">
-			<a class="button" href="/kontakt/?typ=material">Potrebujem materiál</a>
-			<a class="button-secondary" href="/kontakt/?typ=realizacia">Potrebujem realizáciu</a>
+	<section class="cta">
+		<div class="shell cta-inner">
+			<div>
+				<p class="eyebrow">Dopyt a konzultácia</p>
+				<h2>Pošlite zadanie. Navrhneme vhodný materiál alebo realizáciu.</h2>
+			</div>
+			<div class="cta-actions">
+				<a class="button" href="/kontakt/?typ=material">Potrebujem materiál</a>
+				<a class="button-secondary" href="/kontakt/?typ=realizacia">Potrebujem realizáciu</a>
+			</div>
 		</div>
 	</section>
 </MainLayout>
 
 <style>
-	.landing-hero {
-		min-height: 660px;
+	.hero {
+		min-height: 620px;
 		display: flex;
-		align-items: end;
-		padding: 5rem 0 2rem;
+		align-items: center;
 		background:
-			linear-gradient(90deg, rgba(5, 7, 10, 0.94) 0%, rgba(5, 7, 10, 0.72) 48%, rgba(5, 7, 10, 0.2) 100%),
-			linear-gradient(180deg, rgba(5, 7, 10, 0.16), #05070a 100%),
-			var(--hero-image) center / cover;
+			linear-gradient(90deg, rgba(244, 247, 248, 0.96) 0%, rgba(244, 247, 248, 0.86) 43%, rgba(244, 247, 248, 0.24) 78%),
+			var(--hero-image) center right / cover;
+		border-bottom: 1px solid var(--color-border);
 	}
-	.hero-inner {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) 360px;
-		gap: 2rem;
-		align-items: end;
+
+	.hero-content {
+		padding-block: 4.8rem 3rem;
 	}
-	.hero-copy {
-		max-width: 720px;
+
+	.hero-content h1 {
+		margin-bottom: 0.55rem;
+		font-size: 5rem;
+		line-height: 0.92;
 	}
-	.hero-copy h1 {
-		margin-bottom: 0.75rem;
-		font-size: 5.2rem;
-		line-height: 0.9;
-	}
-	.hero-subtitle {
-		max-width: 620px;
+
+	.hero-title {
+		max-width: 650px;
 		color: var(--color-text);
 		font-family: var(--font-heading);
 		font-size: 2rem;
 		font-style: italic;
 		font-weight: 700;
-		line-height: 1.1;
+		line-height: 1.12;
 		text-transform: uppercase;
 	}
+
 	.hero-lead {
 		max-width: 620px;
-		margin-top: 1.25rem;
+		margin-top: 1.1rem;
 		color: var(--color-muted-strong);
-		font-size: 1rem;
 	}
+
 	.hero-actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.8rem;
+		gap: 0.75rem;
 		margin-top: 1.5rem;
 	}
-	.hero-specs {
+
+	.trust-bar {
 		display: grid;
-		gap: 1px;
-		background: rgba(255, 255, 255, 0.12);
-		border: 1px solid rgba(255, 255, 255, 0.12);
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		margin-top: 1.5rem;
+		background: #fff;
+		border: 1px solid var(--color-border);
 	}
-	.hero-specs div {
-		padding: 1rem;
-		background: rgba(8, 11, 15, 0.82);
-		backdrop-filter: blur(14px);
+
+	.trust-bar span {
+		padding: 0.95rem 0.7rem;
+		border-right: 1px solid var(--color-border);
+		color: var(--color-muted-strong);
+		font-size: 0.82rem;
+		font-weight: 800;
+		text-align: center;
 	}
-	.hero-specs span,
-	.kicker,
-	.technical-list span,
-	.service-item span,
-	.brand-grid span,
+
+	.trust-bar span:last-child {
+		border-right: 0;
+	}
+
+	.intro,
+	.capability-grid,
+	.products,
+	.brands,
+	.references {
+		padding-block: 4.5rem;
+	}
+
+	.intro {
+		display: grid;
+		grid-template-columns: 0.9fr 1fr;
+		gap: 3rem;
+		align-items: end;
+	}
+
+	.intro > p {
+		color: var(--color-muted-strong);
+		font-size: 1.06rem;
+	}
+
+	.capability-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+		padding-top: 0;
+	}
+
+	.capability-grid article,
+	.brand-list a,
+	.reference-grid article {
+		background: #fff;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-card);
+	}
+
+	.capability-grid article {
+		padding: 1.4rem;
+	}
+
+	.capability-grid span,
+	.product-list span,
+	.service-card span,
+	.brand-list span,
 	.reference-grid span {
 		display: block;
+		margin-bottom: 0.55rem;
 		color: var(--color-accent);
-		font-size: 0.74rem;
-		font-weight: 800;
+		font-size: 0.72rem;
+		font-weight: 850;
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 	}
-	.hero-specs strong {
-		display: block;
-		margin: 0.25rem 0;
-		color: var(--color-text);
-		font-size: 1rem;
+
+	.capability-grid h3 {
+		margin-bottom: 0.65rem;
 	}
-	.hero-specs p {
-		font-size: 0.88rem;
+
+	.visual-proof {
+		padding-block: 3rem;
+		background: #fff;
+		border-block: 1px solid var(--color-border);
 	}
-	.proof-strip {
+
+	.visual-grid {
 		display: grid;
-		grid-template-columns: repeat(5, minmax(0, 1fr));
-		margin-top: -1rem;
-		border: 1px solid var(--color-border);
-		background: var(--color-panel);
+		grid-template-columns: 1.1fr 0.8fr 0.9fr;
+		gap: 1rem;
+		align-items: stretch;
 	}
-	.proof-strip span {
-		padding: 1rem;
-		border-right: 1px solid var(--color-border);
-		color: var(--color-muted-strong);
-		font-size: 0.86rem;
-		font-weight: 700;
-		text-align: center;
+
+	.visual-grid img,
+	.visual-note {
+		min-height: 330px;
+		border-radius: var(--radius-lg);
 	}
-	.proof-strip span:last-child {
-		border-right: 0;
+
+	.visual-grid img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
-	.intro-system,
-	.product-section,
-	.services-section,
-	.brand-section,
-	.references-section {
-		padding-top: 2.25rem;
+
+	.visual-large {
+		grid-row: span 2;
 	}
-	.section-header {
+
+	.visual-note {
 		display: grid;
-		grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.55fr);
+		align-content: center;
+		padding: 2rem;
+		background: var(--color-panel-strong);
+	}
+
+	.visual-note h2,
+	.visual-note p {
+		color: #fff;
+	}
+
+	.visual-note p:last-child {
+		margin-top: 1rem;
+		color: rgba(255, 255, 255, 0.76);
+	}
+
+	.section-head {
+		display: flex;
+		justify-content: space-between;
 		gap: 2rem;
 		align-items: end;
 		margin-bottom: 1.5rem;
 	}
-	.section-header > p {
-		font-size: 0.96rem;
-	}
-	.system-grid {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1px;
-		background: var(--color-border);
-		border: 1px solid var(--color-border);
-	}
-	.system-grid article {
-		padding: 1.5rem;
-		background: rgba(18, 24, 32, 0.74);
-	}
-	.system-grid h3 {
-		margin: 0.4rem 0 1rem;
-	}
-	.media-band {
-		padding: 1rem 0;
-		background: rgba(255, 255, 255, 0.03);
-		border-block: 1px solid var(--color-border);
-	}
-	.media-grid {
-		display: grid;
-		grid-template-columns: 1.2fr 0.9fr 0.9fr;
-		gap: 0.75rem;
-	}
-	.media-grid img {
-		width: 100%;
-		height: 280px;
-		object-fit: cover;
-	}
-	.technical-list {
-		display: grid;
-		border-top: 1px solid var(--color-border);
-	}
-	.technical-list article {
-		display: grid;
-		grid-template-columns: 56px minmax(0, 1fr) minmax(220px, 0.75fr) 72px;
-		gap: 1rem;
-		align-items: start;
-		padding: 1.15rem 0;
-		border-bottom: 1px solid var(--color-border);
-	}
-	.technical-list h3 {
-		margin-bottom: 0.35rem;
-	}
-	.technical-list ul {
-		margin: 0;
-		padding-left: 1rem;
-		color: var(--color-muted);
-		font-size: 0.9rem;
-	}
-	.technical-list a {
+
+	.text-link {
 		color: var(--color-text);
-		font-size: 0.88rem;
-		font-weight: 800;
-		text-align: right;
+		font-size: 0.86rem;
+		font-weight: 850;
+		text-transform: uppercase;
 		text-decoration: none;
 	}
+
+	.product-list {
+		display: grid;
+		background: #fff;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		overflow: hidden;
+	}
+
+	.product-list a {
+		display: grid;
+		grid-template-columns: 56px minmax(0, 1fr) 180px;
+		gap: 1.2rem;
+		align-items: start;
+		padding: 1.15rem;
+		border-bottom: 1px solid var(--color-border);
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.product-list a:last-child {
+		border-bottom: 0;
+	}
+
+	.product-list h3 {
+		margin-bottom: 0.35rem;
+	}
+
+	.product-list strong {
+		color: var(--color-muted-strong);
+		font-size: 0.88rem;
+		text-align: right;
+	}
+
+	.services {
+		padding-block: 4.5rem;
+		background: #eaf0f2;
+		border-block: 1px solid var(--color-border);
+	}
+
 	.service-grid {
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 1px;
-		background: var(--color-border);
-		border: 1px solid var(--color-border);
+		gap: 1rem;
 	}
-	.service-item {
+
+	.service-card {
 		display: grid;
 		grid-template-rows: 170px 1fr;
+		overflow: hidden;
+		background: #fff;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
 		color: inherit;
 		text-decoration: none;
-		background: #0c1117;
+		box-shadow: var(--shadow-card);
 	}
-	.service-item img {
+
+	.service-card img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		filter: saturate(0.85);
 	}
-	.service-item div {
+
+	.service-card div {
 		padding: 1rem;
 	}
-	.service-item h3 {
-		margin: 0.35rem 0 0.55rem;
+
+	.service-card h3 {
+		margin-bottom: 0.5rem;
 	}
-	.service-item p {
+
+	.service-card p {
 		font-size: 0.9rem;
 	}
-	.brand-section {
+
+	.brands {
 		display: grid;
-		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+		grid-template-columns: 0.8fr 1fr;
 		gap: 2rem;
 		align-items: start;
 	}
+
 	.brand-copy p:last-child {
 		margin-top: 1rem;
+		color: var(--color-muted-strong);
 	}
-	.brand-grid {
+
+	.brand-list {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1px;
-		background: var(--color-border);
-		border: 1px solid var(--color-border);
+		gap: 1rem;
 	}
-	.brand-grid a {
+
+	.brand-list a {
 		display: grid;
-		gap: 0.6rem;
+		gap: 0.55rem;
 		padding: 1.25rem;
-		background: var(--color-panel);
 		color: inherit;
 		text-decoration: none;
 	}
-	.brand-grid strong {
-		font-size: 1.1rem;
-	}
+
 	.reference-grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1rem;
 	}
+
 	.reference-grid article {
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid var(--color-border);
+		overflow: hidden;
 	}
+
 	.reference-grid img {
 		width: 100%;
 		height: 190px;
 		object-fit: cover;
 	}
+
 	.reference-grid div {
 		padding: 1rem;
 	}
+
 	.reference-grid h3 {
-		margin: 0.35rem 0 0.55rem;
+		margin-bottom: 0.5rem;
 	}
-	.final-cta {
+
+	.cta {
+		padding-block: 4rem;
+		background: var(--color-panel-strong);
+	}
+
+	.cta-inner {
 		display: flex;
 		justify-content: space-between;
 		gap: 2rem;
 		align-items: center;
-		padding: 2rem;
-		background: linear-gradient(90deg, rgba(0, 183, 225, 0.12), rgba(255, 255, 255, 0.04));
-		border: 1px solid var(--color-border);
 	}
-	.final-cta h2 {
+
+	.cta h2 {
 		max-width: 680px;
+		color: #fff;
 	}
-	.final-actions {
+
+	.cta-actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.8rem;
+		gap: 0.75rem;
 		justify-content: flex-end;
 	}
+
+	.cta .button-secondary {
+		border-color: rgba(255, 255, 255, 0.32);
+		background: transparent;
+		color: #fff;
+	}
+
 	@media (max-width: 980px) {
-		.landing-hero {
-			min-height: auto;
-			padding-top: 4rem;
+		.hero {
+			min-height: 560px;
 		}
-		.hero-inner,
-		.section-header,
-		.brand-section {
-			grid-template-columns: 1fr;
-		}
-		.hero-copy h1 {
+
+		.hero-content h1 {
 			font-size: 4rem;
 		}
-		.hero-subtitle {
+
+		.hero-title {
 			font-size: 1.55rem;
 		}
-		.proof-strip,
-		.system-grid,
-		.media-grid,
-		.service-grid,
-		.reference-grid {
+
+		.trust-bar,
+		.intro,
+		.visual-grid,
+		.brands,
+		.reference-grid,
+		.service-grid {
 			grid-template-columns: 1fr 1fr;
 		}
-		.technical-list article {
+
+		.capability-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.product-list a {
 			grid-template-columns: 44px 1fr;
 		}
-		.technical-list ul,
-		.technical-list a {
+
+		.product-list strong {
 			grid-column: 2;
 			text-align: left;
 		}
-		.final-cta {
+
+		.cta-inner,
+		.section-head {
 			display: grid;
 		}
-		.final-actions {
+
+		.cta-actions {
 			justify-content: flex-start;
 		}
 	}
+
 	@media (max-width: 640px) {
-		.landing-hero {
-			padding-bottom: 1rem;
-			background-position: center;
+		.hero {
+			min-height: auto;
+			padding-block: 2rem;
+			background:
+				linear-gradient(180deg, rgba(244, 247, 248, 0.97), rgba(244, 247, 248, 0.82)),
+				var(--hero-image) center / cover;
 		}
-		.hero-copy h1 {
-			font-size: 3.1rem;
+
+		.hero-content {
+			padding-block: 3rem 1rem;
 		}
-		.hero-subtitle {
+
+		.hero-content h1 {
+			font-size: 3.2rem;
+		}
+
+		.hero-title {
 			font-size: 1.28rem;
 		}
-		.proof-strip,
-		.system-grid,
-		.media-grid,
+
+		.trust-bar,
+		.intro,
+		.visual-grid,
 		.service-grid,
-		.brand-grid,
+		.brands,
+		.brand-list,
 		.reference-grid {
 			grid-template-columns: 1fr;
 		}
-		.media-grid img {
-			height: 220px;
+
+		.visual-grid img,
+		.visual-note {
+			min-height: 230px;
 		}
-		.final-cta {
-			padding: 1.2rem;
+
+		.intro,
+		.capability-grid,
+		.products,
+		.brands,
+		.references,
+		.services {
+			padding-block: 3rem;
 		}
 	}
 </style>
