@@ -3,7 +3,7 @@ title: Fólie na budovu a kancelárske zóny
 client: Administratívna prevádzka
 category: Fólie na budovy
 description: Funkčná aplikácia fólií na presklené plochy s cieľom znížiť prehrievanie a získať väčšie súkromie v interiéri.
-image: https://carolline.sk/wp-content/uploads/2025/05/holomy.png
+image: https://carolline.sk/wp-content/uploads/2025/05/computaleta-4-ID2293633.jpg
 tags:
   - Solárne fólie
   - Budovy

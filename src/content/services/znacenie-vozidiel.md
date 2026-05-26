@@ -5,7 +5,7 @@ shortTitle: Značenie vozidiel
 description: Reflexné, bezpečnostné a výstražné značenie vozidiel podľa noriem a prevádzkových požiadaviek.
 heroEyebrow: Realizačné služby
 heroLead: Bezpečnostné značenie vozidiel pre mestské služby, technické flotily a špecializované prevádzky, kde rozhoduje viditeľnosť aj súlad s normami.
-heroImage: https://carolline.sk/wp-content/uploads/2025/05/3M-2.png
+heroImage: https://carolline.sk/wp-content/uploads/2025/05/DSC03629_962771c2-0626-4acd-a121-af969808bdf6-1000x500.jpg
 audience: Technické služby, servisné flotily, komunálne podniky, bezpečnostné zložky a organizácie s povinnosťou zreteľného označenia.
 deliverables:
   - Návrh značenia podľa typu vozidla a prevádzky
